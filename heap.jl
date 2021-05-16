@@ -41,7 +41,7 @@ function upHeap(h::heap, child, verbose = false)
     if h.cost[child] < h.cost[parent]
         h = swap(h, child, parent)
         verbose && println("swaped parent with child =>  ", h)
-        upHeap(h, parent, verbose)
+        h = upHeap(h, parent, verbose)
     end
     verbose && println(" Done =>  ", h)
     return h
