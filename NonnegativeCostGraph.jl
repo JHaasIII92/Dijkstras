@@ -13,10 +13,11 @@ using GraphRecipes
 using SparseArrays
 
 struct graph
-    nodes
-    arcs
-    AdjMatrix
-    costs
+    nodes::Vector
+    arcs::Vector
+    AdjMatrix::Matrix
+    costs::Dict
+    n::Int
 end
 
 function newGraph(V::Vector{Int},A::Vector{Tuple{Int64, Int64}},c::Vector)
@@ -31,6 +32,7 @@ function newGraph(V::Vector{Int},A::Vector{Tuple{Int64, Int64}},c::Vector)
             AdjMatrix[e[1],e[2]] = c[i]
             AdjMatrix[e[2],e[1]] = c[i]
         end
-        return graph(V,A,AdjMatrix,c)
+        n = size(V,1)
+        return graph(V,A,AdjMatrix,c,n)
     end
 end
