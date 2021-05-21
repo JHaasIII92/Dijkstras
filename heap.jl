@@ -32,13 +32,16 @@ end
 function decressKey(h::heap, pos, newCost, verbose = false)
     h.cost[pos] = newCost
     verbose && println("Pre upHeap =>  ", h)
-    h = upHeap(h, pos, verbose)
+    if pos != 1 #not decressing the root
+        h = upHeap(h, pos, verbose)
+    end
     return h
 end
 
 function upHeap(h::heap, child, verbose = false)
     parent = div(child, 2)
-    if h.cost[child] < h.cost[parent]
+    verbose && println("parent => $(parent)")
+    parent != 0 && if h.cost[child] < h.cost[parent]
         h = swap(h, child, parent)
         verbose && println("swaped parent with child =>  ", h)
         h = upHeap(h, parent, verbose)
