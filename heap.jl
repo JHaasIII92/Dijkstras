@@ -49,18 +49,24 @@ end
 
 function extractMin(h::heap, verbose = false)
     # remove min from heap replace with last node
-    minCost = h.cost[1]
-    minVert = h.vertice[1]
-    min = node(minCost, minVert)
-    if empty(h) == false
-        h = swap(h, 1, h.last_node)
-        h.last_node -= 1
-        verbose && println("Pre downHeap =>  ", h)
-        # call ReHeap
-        downHeap(h, 1, verbose)
+    if h.last_node != 0
+        minCost = h.cost[1]
+        minVert = h.vertice[1]
+        min = node(minCost, minVert)
+        if h.last_node > 1
+            h = swap(h, 1, h.last_node)
+            h.last_node -= 1
+            verbose && println("Pre downHeap =>  ", h)
+            # call ReHeap
+            downHeap(h, 1, verbose)
         # return the min
+        else
+            h.last_node = 0
+        end
+        return h, min
+    else
+        error("Empty Heap!")
     end
-    return h, min
 end
 
 function downHeap(h::heap, root, verbose = false)
@@ -100,7 +106,7 @@ end
 
 function empty(h::heap)
     isempty = false
-    if h.last_node == 1
+    if h.last_node == 0
         isempty = true
     end
     return isempty
